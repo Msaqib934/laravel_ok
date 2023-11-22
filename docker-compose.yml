@@ -33,8 +33,11 @@ services:
 
   # Nginx Service
   webserver:
-    image: nginx:alpine
-    container_name: laravel-nginx
+    build:
+      context: .
+      dockerfile: Dockerfile_Nginx
+    image: laravel-nginx
+    container_name: webserver
     restart: unless-stopped
     tty: true
     ports:
