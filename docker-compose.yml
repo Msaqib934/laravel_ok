@@ -13,6 +13,8 @@ services:
     restart: unless-stopped
     tty: true
     working_dir: /var/www
+    ports:
+    - "9000:9000"
     volumes:
       - ./:/var/www
       - ./storage:/var/www/storage
