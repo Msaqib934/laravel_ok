@@ -21,5 +21,3 @@ RUN chown -R www-data:www-data *
 RUN composer install
 
 CMD ["php-fpm"]
-
-EXPOSE 9000
