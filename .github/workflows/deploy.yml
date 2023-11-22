@@ -59,8 +59,8 @@ jobs:
           docker-compose build
           docker tag laravel-nginx:latest $ECR_REGISTRY/laravel-nginx:$IMAGE_TAG
           docker tag laravel-app:latest $ECR_REGISTRY/laravel-app:$IMAGE_TAG
-          docker push $ECR_REGISTRY/larvel-nginx:$IMAGE_TAG
-          docker push $ECR_REGISTRY/larvel-app:$IMAGE_TAG
+          docker push $ECR_REGISTRY/laravel-nginx:$IMAGE_TAG
+          docker push $ECR_REGISTRY/laravel-app:$IMAGE_TAG
           echo "setting output values"
           echo "::set-output name=appimage::$ECR_REGISTRY/laravel-app:$IMAGE_TAG"
           echo "::set-output name=webimage::$ECR_REGISTRY/laravel-nginx:$IMAGE_TAG"
