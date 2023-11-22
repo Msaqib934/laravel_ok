@@ -8,7 +8,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    image: my-laravel-app
+    image: larvel-app
     container_name: app
     restart: unless-stopped
     tty: true
@@ -38,7 +38,7 @@ services:
   # Nginx Service
   webserver:
     image: nginx:alpine
-    container_name: webserver
+    container_name: larvel-nginx
     restart: unless-stopped
     tty: true
     ports:
