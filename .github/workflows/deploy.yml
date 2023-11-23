@@ -79,25 +79,25 @@ jobs:
         id: download-task-def
 
       - name: Fill in the new app image ID in the Amazon ECS task definition
-        id: app-task-def
-        uses: aws-actions/amazon-ecs-render-task-definition@v1
-        with:
-          task-definition: ${{ steps.download-task-def.outputs.task-definition }}
-          container-name: ${{ secrets.ECS_APP_CONTAINER_NAME }}
-          image: ${{ steps.build-image.outputs.appimage }}
-
-      - name: Fill in the new nginx image ID in the Amazon ECS task definition
         id: web-task-def
         uses: aws-actions/amazon-ecs-render-task-definition@v1
         with:
-          task-definition: ${{ steps.app-task-def.outputs.task-definition }}
+          task-definition: ${{ steps.download-task-def.outputs.task-definition }}
           container-name: ${{ secrets.ECS_NGINX_CONTAINER_NAME }}
-          image: ${{ steps.build-image.outputs.webimage }} 
+          image: ${{ steps.build-image.outputs.webimage }}
+
+      - name: Fill in the new nginx image ID in the Amazon ECS task definition
+        id: app-task-def
+        uses: aws-actions/amazon-ecs-render-task-definition@v1
+        with:
+          task-definition: ${{ steps.app-task-def.outputs.task-definition }}
+          container-name: ${{ secrets.ECS_APP_CONTAINER_NAME }}
+          image: ${{ steps.build-image.outputs.appimage }} 
 
       - name: Deploy Amazon ECS task definition
         uses: aws-actions/amazon-ecs-deploy-task-definition@v1
         with:
-          task-definition: ${{ needs.steps.web-task-def.outputs.task-definition }}
+          task-definition: ${{ steps.app-task-def.outputs.task-definition }}
           service: final
           cluster: saqib-cluster
-          wait-for-service-stability: ${{ needs.steps.web-task-def.outputs.task-definition }}
+          wait-for-service-stability: true
