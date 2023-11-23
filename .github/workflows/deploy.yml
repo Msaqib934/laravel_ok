@@ -100,4 +100,4 @@ jobs:
           task-definition: ${{ needs.steps.web-task-def.outputs.task-definition }}
           service: final
           cluster: saqib-cluster
-          wait-for-service-stability: true
+          wait-for-service-stability: ${{ needs.steps.web-task-def.outputs.task-definition }}
