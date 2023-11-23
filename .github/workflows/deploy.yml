@@ -95,7 +95,6 @@ jobs:
           image: ${{ steps.build-image.outputs.webimage }} 
 
       - name: Deploy Amazon ECS task definition
-        needs: web-task-def
         uses: aws-actions/amazon-ecs-deploy-task-definition@v1
         with:
           task-definition: ${{ needs.steps.web-task-def.outputs.task-definition }}
