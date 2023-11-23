@@ -75,13 +75,14 @@ jobs:
       - name: Download task definition
         run: |
           aws ecs describe-task-definition --task-definition ${{ secrets.ECS_CONTAINER_DEFINITION }} \
-          --query taskDefinition > task-definition.json    
+          --query taskDefinition > task-definition.json  
+        id: download-task-def
 
       - name: Fill in the new app image ID in the Amazon ECS task definition
         id: app-task-def
         uses: aws-actions/amazon-ecs-render-task-definition@v1
         with:
-          task-definition: task-definition.json
+          task-definition: ${{ steps.download-task-def.outputs.task-definition }}
           container-name: ${{ secrets.ECS_APP_CONTAINER_NAME }}
           image: ${{ steps.build-image.outputs.appimage }}
 
