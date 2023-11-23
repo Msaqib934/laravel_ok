@@ -95,9 +95,10 @@ jobs:
           image: ${{ steps.build-image.outputs.webimage }} 
 
       - name: Deploy Amazon ECS task definition
+        needs: web-task-def
         uses: aws-actions/amazon-ecs-deploy-task-definition@v1
         with:
-          task-definition: ${{ steps.web-task-def.outputs.task-definition }}
+          task-definition: ${{ needs.steps.web-task-def.outputs.task-definition }}
           service: final
           cluster: saqib-cluster
           wait-for-service-stability: true
